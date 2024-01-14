@@ -28,7 +28,7 @@ function Login() {
         // Store the token in localStorage or sessionStorage
         localStorage.setItem("authToken", token);
         console.log(localStorage.getItem('authToken'));
-        navigate('/home');
+        navigate('/data');
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -37,6 +37,9 @@ function Login() {
 
   return (
     <>
+      <div className='back'>
+      <button onClick={() => navigate('/home')}>Back</button>
+      </div>
       <p>Login</p>
       <div className='login'>
         <label htmlFor='email'>Email : </label>
