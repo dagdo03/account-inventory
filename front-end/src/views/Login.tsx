@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import '../App.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/login', {
@@ -21,15 +22,13 @@ function Login() {
 
       const data = await response.json(); 
       if (response.ok) {
-        // Redirect to a success page or another route
         console.log(data);
-              // Assuming the token is available in the 'data' response property
         const token = data.token;
 
-      // Store the token in localStorage or sessionStorage
+        // Store the token in localStorage or sessionStorage
         localStorage.setItem("authToken", token);
         console.log(localStorage.getItem('authToken'));
-        // navigate('/home');
+        navigate('/home');
       }
     } catch (error) {
       console.error('Error fetching data:', error);

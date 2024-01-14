@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ShowDataResources;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\DataResources;
 use App\Http\Requests\CreateDataRequest;
+use App\Http\Resources\AccountResources;
 
 class DataController extends Controller
 {
@@ -29,12 +29,10 @@ class DataController extends Controller
     }
 
     public function showData(Request $request){
-        $data = DB::table('accounts')->get(['id', 'title', 'username', 'password']);
+        $data = DB::table('accounts')->where('author_id', $request->user()->id)->get();
+        $dataResource = AccountResources::collection($data);
         // $dataResource = ShowDataResources::make($data);
-        return response()->json([
-            'data' => $data,
-            // 'message' => 'Data created successfully',
-        ]);
+        return $dataResource;
 
     }
 }
